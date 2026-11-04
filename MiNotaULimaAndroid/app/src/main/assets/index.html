@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Calculadora personal de notas para tus cursos de la Universidad de Lima.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MiNota ULima</title>
+<style>
+:root{--bg:#0d1421;--panel:#151f30;--panel2:#1b2940;--line:#2a3a52;--text:#f3f6fb;--muted:#9eacc0;--green:#42d392;--green2:#173d35;--red:#ff7373;--yellow:#f6c85f}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111d30 0%,var(--bg) 48%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:22px 16px 48px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.brand{font-weight:850;font-size:20px;letter-spacing:-.5px}.brand span{color:var(--green)}.tag{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:6px 9px;border-radius:30px}
+h1{font-size:28px;line-height:1.1;margin:10px 0 7px;letter-spacing:-.8px}.sub{color:var(--muted);font-size:14px;margin:0 0 22px}.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}.stat,.panel,.course{background:rgba(21,31,48,.94);border:1px solid var(--line);border-radius:18px;padding:15px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:25px;margin-top:5px}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px}.sectionhead h2{font-size:17px;margin:0}.btn{border:0;border-radius:12px;background:var(--green);color:#092018;font-weight:800;padding:11px 14px}.btn.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.btn.danger{background:#49272e;color:#ffd7d7}.btn.small{padding:8px 10px;font-size:12px}.courses{display:grid;gap:11px}.course{padding:15px}.coursehead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.course h3{margin:0 0 5px;font-size:16px}.muted{color:var(--muted);font-size:12px}.pill{font-size:11px;padding:5px 8px;border-radius:30px;background:var(--panel2);color:var(--muted);white-space:nowrap}.progress{height:7px;background:#26364c;border-radius:20px;overflow:hidden;margin:13px 0 8px}.progress div{height:100%;background:var(--green);border-radius:20px}.coursebottom{display:flex;justify-content:space-between;align-items:center;gap:8px}.grade{font-weight:800;font-size:20px}.grade.good{color:var(--green)}.grade.bad{color:var(--red)}.empty{text-align:center;padding:28px 15px;color:var(--muted);border:1px dashed var(--line);border-radius:18px}.overlay{position:fixed;inset:0;background:#050a12cc;display:none;align-items:flex-end;justify-content:center;padding:12px;z-index:5}.overlay.show{display:flex}.modal{width:min(100%,650px);max-height:92vh;overflow:auto;background:#121d2d;border:1px solid var(--line);border-radius:22px;padding:18px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modalhead h2{font-size:19px;margin:0}.x{background:none;color:var(--muted);border:0;font-size:25px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;color:var(--muted)}input{width:100%;background:#0d1726;border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--text);outline:none}input:focus{border-color:var(--green)}.evalrow{display:grid;grid-template-columns:minmax(0,1fr) 75px 75px 32px;gap:7px;align-items:center;margin:8px 0}.evalrow input{padding:9px 7px;font-size:13px}.evalrow .remove{border:0;background:#49272e;color:#ffd7d7;border-radius:9px;height:36px}.evaltitle{display:grid;grid-template-columns:minmax(0,1fr) 75px 75px 32px;gap:7px;color:var(--muted);font-size:10px;padding:0 2px}.addrow{margin:10px 0}.result{background:#102b29;border:1px solid #24594d;border-radius:14px;padding:13px;margin:14px 0}.result strong{font-size:23px;color:var(--green)}.result p{font-size:13px;color:#c1d8d0;margin:5px 0 0}.warning{background:#3b3020;border:1px solid #6b542d;color:#ffe2a3;border-radius:12px;padding:11px;font-size:12px;margin:12px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.foot{color:var(--muted);font-size:11px;text-align:center;margin-top:25px;line-height:1.5}
+@media(min-width:600px){.overlay{align-items:center}.summary{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="top"><div class="brand">MiNota <span>ULima</span></div><div class="tag">ESCALA 0–20 · MÍNIMO 11</div></div>
+ <h1>Que las notas no te agarren desprevenido.</h1>
+ <p class="sub">Organiza tus cursos y calcula qué necesitas en las evaluaciones que faltan.</p>
+ <div class="summary">
+  <div class="stat"><small>Cursos registrados</small><strong id="courseCount">0</strong></div>
+  <div class="stat"><small>Cursos aprobados</small><strong id="passedCount">0</strong></div>
+  <div class="stat"><small>Nota mínima</small><strong>11<span style="font-size:13px;color:var(--muted)"> / 20</span></strong></div>
+ </div>
+ <div class="sectionhead"><h2>Mis cursos</h2><button class="btn" onclick="newCourse()">＋ Agregar curso</button></div>
+ <div id="courses" class="courses"></div>
+ <div class="foot">Tus datos se guardan en este dispositivo. Esta es una versión inicial; revisa siempre los pesos y reglas publicados por cada docente.</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+ <div class="modal">
+  <div class="modalhead"><h2 id="modalTitle">Nuevo curso</h2><button class="x" onclick="closeModal()">×</button></div>
+  <div class="field"><label>Nombre del curso</label><input id="courseName" placeholder="Ej. Matemática Básica"></div>
+  <div class="sectionhead"><h2>Evaluaciones</h2><span class="muted">Nota /20 · Peso %</span></div>
+  <div class="evaltitle"><span>Evaluación</span><span>Nota</span><span>Peso %</span><span></span></div>
+  <div id="evals"></div>
+  <button class="btn secondary small addrow" onclick="addEval()">＋ Agregar evaluación</button>
+  <div id="modalResult"></div>
+  <div class="actions"><button class="btn" onclick="saveCourse()">Guardar curso</button><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn danger small" id="deleteCourse" style="display:none;margin-left:auto" onclick="deleteCourse()">Eliminar curso</button></div>
+ </div>
+</div>
+<script>
+const KEY='minota-ulima-v1'; let courses=JSON.parse(localStorage.getItem(KEY)||'[]'); let editing=null;
+const $=id=>document.getElementById(id);
+function persist(){localStorage.setItem(KEY,JSON.stringify(courses));render()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function calc(evals){let total=evals.reduce((s,e)=>s+(Number(e.weight)||0),0), completed=evals.filter(e=>e.grade!==''&&e.grade!==null&&Number.isFinite(Number(e.grade)));let earned=completed.reduce((s,e)=>s+Number(e.grade)*Number(e.weight)/100,0);let pending=evals.filter(e=>e.grade===''||e.grade===null);let remaining=pending.reduce((s,e)=>s+Number(e.weight||0),0);let final= pending.length===0 ? earned : null;let needed=remaining>0?(11-earned)*100/remaining:null;return {total,earned,remaining,pending,final,needed,completed:completed.length}}
+function status(c){let x=calc(c.evals);if(x.pending.length===0)return x.final>=11?'Aprobado':'Desaprobado';if(x.total!==100)return 'Pesos incompletos';if(x.needed<=0)return 'Meta alcanzada';if(x.needed>20)return 'Meta difícil';return 'En curso'}
+function render(){ $('courseCount').textContent=courses.length;$('passedCount').textContent=courses.filter(c=>status(c)==='Aprobado').length;
+ if(!courses.length){$('courses').innerHTML='<div class="empty"><div style="font-size:30px;margin-bottom:8px">📚</div><b>Aún no tienes cursos</b><p>Agrega tu primer curso y registra todas sus evaluaciones.</p><button class="btn" onclick="newCourse()">＋ Crear mi primer curso</button></div>';return}
+ $('courses').innerHTML=courses.map((c,i)=>{let x=calc(c.evals),st=status(c),pct=Math.min(100,Math.max(0,x.total));let grade=x.final!==null?x.final.toFixed(2):x.earned.toFixed(2);let sub=x.pending.length? (x.total===100?`Necesitas promedio ${x.needed<=0?'0.00':x.needed.toFixed(2)} en lo pendiente`:`Pesos registrados: ${x.total}% · deben sumar 100%`):`Nota final calculada`;return `<div class="course"><div class="coursehead"><div><h3>${esc(c.name)}</h3><div class="muted">${c.evals.length} evaluaciones · ${x.completed} calificadas</div></div><span class="pill">${st}</span></div><div class="progress"><div style="width:${pct}%"></div></div><div class="coursebottom"><div><div class="grade ${x.final!==null?(x.final>=11?'good':'bad'):''}">${grade}<span style="font-size:11px;color:var(--muted);font-weight:500"> ${x.final!==null?'/ 20':'acumulado'}</span></div><div class="muted">${sub}</div></div><button class="btn secondary small" onclick="editCourse(${i})">Ver / editar</button></div></div>`}).join('')}
+function newCourse(){editing=null;$('modalTitle').textContent='Nuevo curso';$('courseName').value='';$('evals').innerHTML='';$('deleteCourse').style.display='none';addEval('Colaborativo 1','','');addEval('Examen escrito 1','','');$('modalResult').innerHTML='';$('overlay').classList.add('show')}
+function editCourse(i){editing=i;let c=courses[i];$('modalTitle').textContent='Editar curso';$('courseName').value=c.name;$('evals').innerHTML='';c.evals.forEach(e=>addEval(e.name,e.grade,e.weight));$('deleteCourse').style.display='inline-block';updateResult();$('overlay').classList.add('show')}
+function addEval(name='',grade='',weight=''){let d=document.createElement('div');d.className='evalrow';d.innerHTML=`<input class="ename" placeholder="Ej. Exposición" value="${esc(name)}"><input class="egrade" type="number" min="0" max="20" step="0.1" placeholder="—" value="${grade}"><input class="eweight" type="number" min="0" max="100" step="0.1" placeholder="%" value="${weight}"><button class="remove" title="Quitar" onclick="this.parentElement.remove();updateResult()">×</button>`;d.querySelectorAll('input').forEach(el=>el.addEventListener('input',updateResult));$('evals').appendChild(d);updateResult()}
+function readEvals(){return [...$('evals').querySelectorAll('.evalrow')].map(r=>({name:r.querySelector('.ename').value.trim()||'Evaluación',grade:r.querySelector('.egrade').value,weight:r.querySelector('.eweight').value}))}
+function updateResult(){let es=readEvals(),x=calc(es);let invalid=es.some(e=>e.grade!==''&&(Number(e.grade)<0||Number(e.grade)>20));let msg=`<div class="result"><div class="muted">Peso registrado: ${x.total.toFixed(1)}% · Falta: ${(100-x.total).toFixed(1)}%</div>${x.total===100&&!invalid?`<strong>${x.pending.length? (x.needed<=0?'Ya alcanzaste el 11':x.needed>20?'Necesitarías más de 20':`Necesitas ${x.needed.toFixed(2)} / 20`):`Nota final: ${x.final.toFixed(2)} / 20`}</strong><p>${x.pending.length?`Promedio necesario en las ${x.pending.length} evaluaciones pendientes, ponderadas según su porcentaje.`:'Todas las evaluaciones tienen nota.'}</p>`:`<p>Completa los pesos hasta llegar al 100%. ${invalid?'Las notas deben estar entre 0 y 20.':''}</p>`}</div>`;$('modalResult').innerHTML=msg}
+function saveCourse(){let name=$('courseName').value.trim(),evals=readEvals();if(!name){alert('Escribe el nombre del curso.');return}if(!evals.length){alert('Agrega al menos una evaluación.');return}if(evals.some(e=>e.grade!==''&&(Number(e.grade)<0||Number(e.grade)>20))){alert('Las notas deben estar entre 0 y 20.');return}let total=evals.reduce((s,e)=>s+(Number(e.weight)||0),0);if(Math.abs(total-100)>0.001){alert(`Los porcentajes deben sumar 100%. Actualmente suman ${total}%.`);return}let c={name,evals};if(editing===null)courses.push(c);else courses[editing]=c;persist();closeModal()}
+function deleteCourse(){if(editing!==null&&confirm('¿Eliminar este curso y sus evaluaciones?')){courses.splice(editing,1);persist();closeModal()}}
+function closeModal(){$('overlay').classList.remove('show')}
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
